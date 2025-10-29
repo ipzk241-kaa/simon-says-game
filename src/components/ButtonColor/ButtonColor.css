@@ -1,0 +1,19 @@
+.button-color {
+  width: 120px;
+  height: 120px;
+  border: none;
+  margin: 10px;
+  border-radius: 12px;
+  opacity: 0.8;
+  transition: 0.2s;
+}
+
+.button-color.red { background: #f44336; }
+.button-color.green { background: #4caf50; }
+.button-color.blue { background: #2196f3; }
+.button-color.yellow { background: #ffeb3b; }
+
+.button-color.active {
+  opacity: 1;
+  box-shadow: 0 0 20px white;
+}

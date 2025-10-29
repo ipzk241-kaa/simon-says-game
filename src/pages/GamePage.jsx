@@ -7,12 +7,12 @@ export default function GamePage() {
     level,
     activeColor,
     isGameOver,
-    handlePlayerClick,
     startGame,
+    handlePlayerClick,
   } = useSimonGame();
 
   return (
-    <div className="game-page">
+    <main className="game-container">
       <Header title={isGameOver ? "Гру завершено" : `Рівень ${level}`} />
 
       <div className="game-board">
@@ -26,11 +26,17 @@ export default function GamePage() {
         ))}
       </div>
 
-      {isGameOver && (
+      {isGameOver ? (
         <button onClick={startGame} className="restart-btn">
           Почати знову
         </button>
+      ) : (
+        level === 0 && (
+          <button onClick={startGame} className="start-btn">
+            Почати гру
+          </button>
+        )
       )}
-    </div>
+    </main>
   );
 }

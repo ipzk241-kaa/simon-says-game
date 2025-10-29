@@ -1,3 +1,5 @@
+import "./ButtonColor.css";
+
 export default function ButtonColor({ color, isActive, onClick }) {
   return (
     <button

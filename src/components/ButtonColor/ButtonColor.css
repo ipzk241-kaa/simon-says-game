@@ -1,19 +1,20 @@
 .button-color {
-  width: 120px;
-  height: 120px;
+  width: 160px;
+  height: 160px;
+  border-radius: 20px;
   border: none;
-  margin: 10px;
-  border-radius: 12px;
   opacity: 0.8;
-  transition: 0.2s;
+  transition: all 0.2s ease;
+  cursor: pointer;
 }
 
-.button-color.red { background: #f44336; }
-.button-color.green { background: #4caf50; }
-.button-color.blue { background: #2196f3; }
-.button-color.yellow { background: #ffeb3b; }
+.button-color.red { background-color: #e74c3c; }
+.button-color.green { background-color: #27ae60; }
+.button-color.blue { background-color: #3498db; }
+.button-color.yellow { background-color: #f1c40f; }
 
 .button-color.active {
   opacity: 1;
-  box-shadow: 0 0 20px white;
+  transform: scale(1.1);
+  box-shadow: 0 0 25px white;
 }

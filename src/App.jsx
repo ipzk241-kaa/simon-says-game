@@ -5,12 +5,17 @@ import ResultPage from "./pages/ResultPage";
 
 function App() {
   const [page, setPage] = useState("start");
+  const [score, setScore] = useState(0);
 
   return (
     <>
-      {page === "start" && <StartPage />}
-      {page === "game" && <GamePage />}
-      {page === "result" && <ResultPage />}
+      {page === "start" && <StartPage onStart={() => setPage("game")} />}
+      {page === "game" && (
+        <GamePage onGameOver={(lvl) => { setScore(lvl); setPage("result"); }} />
+      )}
+      {page === "result" && (
+        <ResultPage score={score} onRestart={() => setPage("start")} />
+      )}
     </>
   );
 }

@@ -1,11 +1,11 @@
 import Header from "../components/Header/Header";
 
-export default function ResultPage() {
+export default function ResultPage({ score, onRestart }) {
   return (
-    <>
-      <Header title="Результати гри" />
-      <p>Ваш рахунок: 0</p>
-      <button>Грати знову</button>
-    </>
+    <div className="result-page">
+      <Header title="Результат гри" />
+      <p>Ваш рівень: {score}</p>
+      <button onClick={onRestart}>Грати знову</button>
+    </div>
   );
 }

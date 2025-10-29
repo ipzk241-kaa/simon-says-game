@@ -9,13 +9,14 @@ export function useSimonGame() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   const [activeColor, setActiveColor] = useState(null);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const startGame = () => {
     setLevel(1);
     setSequence([]);
     setPlayerInput([]);
-    setIsPlaying(true);
     setIsGameOver(false);
+    setIsPlaying(true);
   };
 
   const nextRound = () => {
@@ -25,19 +26,32 @@ export function useSimonGame() {
   };
 
   useEffect(() => {
-    if (isPlaying && sequence.length > 0) {
+    if (isPlaying && sequence.length === 0 && level === 1) {
+      nextRound();
+    }
+  }, [isPlaying, level]);
+
+  useEffect(() => {
+    if (sequence.length > 0) {
+      setIsAnimating(true);
       let i = 0;
       const interval = setInterval(() => {
         setActiveColor(sequence[i]);
-        setTimeout(() => setActiveColor(null), 500);
+        setTimeout(() => setActiveColor(null), 400);
         i++;
-        if (i >= sequence.length) clearInterval(interval);
+        if (i >= sequence.length) {
+          clearInterval(interval);
+          setTimeout(() => setIsAnimating(false), 600);
+        }
       }, 800);
     }
-  }, [sequence, isPlaying]);
+  }, [sequence]);
 
   const handlePlayerClick = (color) => {
-    if (!isPlaying) return;
+    if (!isPlaying || isAnimating) return;
+
+    setActiveColor(color);
+    setTimeout(() => setActiveColor(null), 300);
 
     const newInput = [...playerInput, color];
     setPlayerInput(newInput);
@@ -56,16 +70,10 @@ export function useSimonGame() {
     }
   };
 
-  useEffect(() => {
-    if (level === 1) nextRound();
-  }, [level]);
 
   return {
     level,
-    sequence,
-    playerInput,
     activeColor,
-    isPlaying,
     isGameOver,
     startGame,
     handlePlayerClick,

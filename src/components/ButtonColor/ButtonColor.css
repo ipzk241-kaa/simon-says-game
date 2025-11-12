@@ -11,7 +11,12 @@
 .button-color.red { background-color: #e74c3c; }
 .button-color.green { background-color: #27ae60; }
 .button-color.blue { background-color: #3498db; }
-.button-color.yellow { background-color: #f1c40f; }
+.button-color.yellow { background-color: #fbff1c; }
+.button-color.purple { background-color: #c00ff1; }
+.button-color.orange { background-color: #f1c40f; }
+.button-color.pink { background-color: #f10fb1; }
+.button-color.cyan { background-color: #00ffff; }
+.button-color.celadon{background-color: #ace1af;}
 
 .button-color.active {
   opacity: 1;

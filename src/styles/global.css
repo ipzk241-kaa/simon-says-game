@@ -23,7 +23,6 @@ body {
 
 .game-board {
   display: grid;
-  grid-template-columns: repeat(2, 160px);
   grid-template-rows: repeat(2, 160px);
   gap: 25px;
   justify-content: center;
@@ -31,3 +30,17 @@ body {
   margin-top: 40px;
 }
 
+.start-btn, .settings-btn {
+  background-color: #3498db;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.start-btn:hover, .settings-btn:hover {
+  background-color: #2980b9;
+}

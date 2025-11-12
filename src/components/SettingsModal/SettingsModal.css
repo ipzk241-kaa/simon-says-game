@@ -1,0 +1,60 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content.settings {
+  background: #1e1e2f;
+  color: white;
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+  width: 320px;
+  text-align: center;
+}
+
+.modal-content.settings label {
+  display: block;
+  margin-top: 10px;
+  text-align: left;
+}
+
+.modal-content.settings input,
+.modal-content.settings select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.form-buttons button {
+  background: #3498db;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+  transition: 0.2s;
+}
+
+.form-buttons button:hover {
+  background: #2980b9;
+}
+
+.error {
+  color: #ff6b6b;
+  font-size: 0.85rem;
+}

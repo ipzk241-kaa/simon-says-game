@@ -5,8 +5,22 @@ import GameOverModal from "../components/GameOverModal/GameOverModal";
 import SettingsModal from "../components/SettingsModal/SettingsModal";
 import { useGameSettings } from "../context/GameSettingsContext";
 import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext";
+import { useEffect } from "react";
 
 export default function GamePage() {
+  const { userId: urlId } = useParams();
+  const { userId, ensureUserId } = useUser();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!urlId) {
+      const id = ensureUserId();
+      navigate(`/user/${id}/game`, { replace: true });
+    }
+  }, [urlId, ensureUserId, navigate]);
+
   const {
     level,
     activeColor,
@@ -53,7 +67,7 @@ export default function GamePage() {
         ))}
       </div>
 
-      <div className="controls">
+      <div className="controls" style={{marginTop:24}}>
         {level === 0 && !isGameOver && (
           <button onClick={startGame} className="start-btn">
             ▶️ Почати гру
@@ -65,6 +79,12 @@ export default function GamePage() {
           onClick={() => setIsSettingsOpen(true)}
         >
           ⚙️ Налаштування
+        </button>
+
+        <button className="back-btn"
+          onClick={() => navigate("/start")}
+        >
+          Повернутись на старт
         </button>
       </div>
 

@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
-import { useGameSettings } from "../context/GameSettingsContext";
+import { useSelector } from "react-redux";
 
 export function useSimonGame() {
-  const { settings } = useGameSettings();
+  const difficulty = useSelector(state => state.gameSettings.difficulty);
+  const settingsByDifficulty = useSelector(state => state.gameSettings.settingsByDifficulty);
+  const settings = { difficulty, ...settingsByDifficulty[difficulty] };
+  
   const [colors, setColors] = useState([]);
 
   const [sequence, setSequence] = useState([]);

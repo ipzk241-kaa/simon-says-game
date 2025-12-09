@@ -3,20 +3,21 @@ import ButtonColor from "../components/ButtonColor/ButtonColor";
 import { useSimonGame } from "../hooks/useSimonGame";
 import GameOverModal from "../components/GameOverModal/GameOverModal";
 import SettingsModal from "../components/SettingsModal/SettingsModal";
-import { useGameSettings } from "../context/GameSettingsContext";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useUser } from "../context/UserContext";
 import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { ensureUserId } from "../store/userSlice";
 
 export default function GamePage() {
   const { userId: urlId } = useParams();
-  const { userId, ensureUserId } = useUser();
+  const { userId } = useSelector(state => state.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!urlId) {
-      const id = ensureUserId();
+      const id = dispatch(ensureUserId());
       navigate(`/user/${id}/game`, { replace: true });
     }
   }, [urlId, ensureUserId, navigate]);
@@ -31,7 +32,9 @@ export default function GamePage() {
   } = useSimonGame();
 
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const { settings } = useGameSettings();
+  const difficulty = useSelector(state => state.gameSettings.difficulty);
+  const settingsByDifficulty = useSelector(state => state.gameSettings.settingsByDifficulty);
+  const settings = { difficulty, ...settingsByDifficulty[difficulty] };
 
   return (
     <main className="game-container">

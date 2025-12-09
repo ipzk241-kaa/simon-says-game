@@ -1,17 +1,24 @@
 import ReactDOM from "react-dom";
 import "./GameOverModal.css";
-import { addScore } from "./leaderboard";
-import { useUser } from "../../context/UserContext";
+import { useSelector, useDispatch } from "react-redux";
+import { addScore } from "../../store/leaderboardSlice";
 import { useEffect } from "react";
 
 export default function GameOverModal({ isOpen, onRestart, score }) {
-  const { userId, nickname } = useUser();
+  const { userId, nickname } = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isOpen && userId) {
-      addScore({ id: userId, nickname: nickname || "Anonymous", level: score, ts: Date.now() });
+      dispatch(addScore({
+        id: userId,
+        nickname: nickname || "Anonymous",
+        level: score,
+        ts: Date.now()
+      }));
     }
-  }, [isOpen, userId, nickname, score]);
+  }, [isOpen, userId, nickname, score, dispatch]);
+
 
   if (!isOpen) return null;
 

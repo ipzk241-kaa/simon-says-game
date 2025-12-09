@@ -1,7 +1,8 @@
 import ReactDOM from "react-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useGameSettings } from "../../context/GameSettingsContext";
+import { useSelector, useDispatch } from "react-redux";
+import { setDifficulty } from "../../store/gameSettingsSlice";
 import "./SettingsModal.css";
 
 const schema = Yup.object().shape({
@@ -9,7 +10,8 @@ const schema = Yup.object().shape({
 });
 
 export default function SettingsModal({ isOpen, onClose }) {
-  const { difficulty, setDifficulty } = useGameSettings();
+  const difficulty = useSelector(state => state.gameSettings.difficulty);
+  const dispatch = useDispatch();
 
   if (!isOpen) return null;
 
@@ -21,7 +23,7 @@ export default function SettingsModal({ isOpen, onClose }) {
           initialValues={{ difficulty }}
           validationSchema={schema}
           onSubmit={(values) => {
-            setDifficulty(values.difficulty);
+            dispatch(setDifficulty(values.difficulty));
             onClose();
           }}
         >

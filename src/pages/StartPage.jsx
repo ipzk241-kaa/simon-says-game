@@ -1,6 +1,7 @@
 import Header from "../components/Header/Header";
 import "../styles/global.css";
-import { useUser } from "../context/UserContext";
+import { useSelector, useDispatch } from "react-redux";
+import { setNickname, ensureUserId } from "../store/userSlice";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -18,9 +19,10 @@ const schema = Yup.object().shape({
 });
 
 export default function StartPage() {
-  const { setNickname, ensureUserId, userId, nickname } = useUser();
+  const { userId, nickname } = useSelector(state => state.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const leaderboard = loadLeaderboard().slice(0, 10);
+  const leaderboard = useSelector(state => state.leaderboard).slice(0, 10);
 
   return (
     <div className="wrap">
@@ -32,8 +34,9 @@ export default function StartPage() {
         initialValues={{ nickname: nickname || "" }}
         validationSchema={schema}
         onSubmit={(values) => {
-          setNickname(values.nickname.trim());
-          const uid = ensureUserId();
+          dispatch(setNickname(values.nickname.trim()));
+          dispatch(ensureUserId());
+          const uid = userId || localStorage.getItem("simon-uid");
           navigate(`/user/${uid}/game`);
         }}
       >

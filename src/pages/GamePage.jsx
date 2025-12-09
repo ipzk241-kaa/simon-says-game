@@ -1,4 +1,5 @@
 import Header from "../components/Header/Header";
+import "./GamePage.css"
 import ButtonColor from "../components/ButtonColor/ButtonColor";
 import { useSimonGame } from "../hooks/useSimonGame";
 import GameOverModal from "../components/GameOverModal/GameOverModal";

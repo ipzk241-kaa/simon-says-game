@@ -1,5 +1,5 @@
 import Header from "../components/Header/Header";
-import "../styles/global.css";
+import "./StartPage.css";
 import { useSelector, useDispatch } from "react-redux";
 import { setNickname, ensureUserId } from "../store/userSlice";
 import { useNavigate } from "react-router-dom";

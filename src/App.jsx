@@ -1,17 +1,15 @@
-import { useState } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import StartPage from "./pages/StartPage";
 import GamePage from "./pages/GamePage";
-import ResultPage from "./pages/ResultPage";
 
 function App() {
-  const [page, setPage] = useState("start");
-
   return (
-    <>
-      {page === "start" && <StartPage />}
-      {page === "game" && <GamePage />}
-      {page === "result" && <ResultPage />}
-    </>
+    <Routes>
+      <Route path="/" element={<Navigate to="/start" replace />} />
+      <Route path="/start" element={<StartPage />} />
+      <Route path="/user/:userId/game" element={<GamePage />} />
+      <Route path="*" element={<Navigate to="/start" replace />} />
+    </Routes>
   );
 }
 

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/StartPage.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/StartPage.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import Header from "../components/Header/Header";
+import "./StartPage.css";
+import { useSelector, useDispatch } from "react-redux";
+import { setNickname, ensureUserId } from "../store/userSlice";
+import { useNavigate } from "react-router-dom";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+
+const loadLeaderboard = () => {
+  try { return JSON.parse(localStorage.getItem("simon-leaderboard") || "[]"); }
+  catch { return []; }
+};
+const schema = Yup.object().shape({
+  nickname: Yup.string()
+    .trim()
+    .min(2, "Мінімум 2 символи")
+    .max(16, "Максимум 16 символів")
+    .required("Введіть нікнейм"),
+});
+
+/**
+ * `StartPage` is the start page of the "Simon Says" game.
+ *
+ * Responsibilities:
+ * - Entering a user nickname using a Formik form with Yup validation
+ * - Creating or confirming a `userId` in the Redux store
+ * - Navigating to the game (`GamePage`) after entering a nickname
+ * - Displaying the Top 10 leaderboard from LocalStorage
+ *
+ * @component
+ * @exports StartPage
+ *
+ * @returns {JSX.Element}
+ *
+ * @example
+ * &lt;StartPage />
+ */
+
+export default function StartPage() {
+  const { userId, nickname } = useSelector(state => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const leaderboard = useSelector(state => state.leaderboard).slice(0, 10);
+
+  return (
+    &lt;div className="wrap">
+      &lt;Header title="Simon Says" />
+      &lt;p className="sub">Введіть нікнейм і починайте гру. (Прогрес зберігатиметься локально).&lt;/p>
+
+      &lt;Formik
+        enableReinitialize
+        initialValues={{ nickname: nickname || "" }}
+        validationSchema={schema}
+        onSubmit={(values) => {
+          dispatch(setNickname(values.nickname.trim()));
+          dispatch(ensureUserId());
+          const uid = userId || localStorage.getItem("simon-uid");
+          navigate(`/user/${uid}/game`);
+        }}
+      >
+        {() => (
+          &lt;Form>
+            &lt;div className="row">
+              &lt;Field
+                name="nickname"
+                placeholder="Ваш нік"
+                className="input"
+              />
+              &lt;button type="submit" className="btn">Почати&lt;/button>
+            &lt;/div>
+            &lt;ErrorMessage name="nickname" component="div" className="error" />
+          &lt;/Form>
+        )}
+      &lt;/Formik>
+
+      &lt;h3 style={{marginTop:24}}>🏆 Таблиця лідерів&lt;/h3>
+      &lt;table className="table">
+        &lt;thead>
+          &lt;tr>&lt;th>#&lt;/th>&lt;th>Нік&lt;/th>&lt;th>Рівень&lt;/th>&lt;th>Дата&lt;/th>&lt;/tr>
+        &lt;/thead>
+        &lt;tbody>
+          {leaderboard.length === 0 ? (
+            &lt;tr>&lt;td colSpan="4" style={{opacity:.7}}>Поки що порожньо — станьте першим!&lt;/td>&lt;/tr>
+          ) : leaderboard.map((r, i) => (
+            &lt;tr key={r.id + "_" + i}>
+              &lt;td>{i + 1}&lt;/td>
+              &lt;td>{r.nickname}&lt;/td>
+              &lt;td>{r.level}&lt;/td>
+              &lt;td>{new Date(r.ts).toLocaleString()}&lt;/td>
+            &lt;/tr>
+          ))}
+        &lt;/tbody>
+      &lt;/table>
+
+      {userId &amp;&amp; nickname &amp;&amp; (
+        &lt;div style={{marginTop:16}}>
+          &lt;button className="btn" onClick={() => navigate(`/user/${userId}/game`)}>
+            Продовжити як {nickname}
+          &lt;/button>
+        &lt;/div>
+      )}
+    &lt;/div>
+  );
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-ButtonColor.html">ButtonColor</a></li><li><a href="module-CookieBanner.html">CookieBanner</a></li><li><a href="module-GameOverModal.html">GameOverModal</a></li><li><a href="module-GamePage.html">GamePage</a></li><li><a href="module-Header.html">Header</a></li><li><a href="module-Layout.html">Layout</a></li><li><a href="module-SettingsModal.html">SettingsModal</a></li><li><a href="module-StartPage.html">StartPage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Button">Button</a></li><li><a href="global.html#ClosedModal">ClosedModal</a></li><li><a href="global.html#ModalDecorator">ModalDecorator</a></li><li><a href="global.html#store">store</a></li><li><a href="global.html#useGameLogic">useGameLogic</a></li><li><a href="global.html#useGameSettings">useGameSettings</a></li><li><a href="global.html#useSimonGame">useSimonGame</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sun Feb 22 2026 19:03:01 GMT+0200 (за східноєвропейським стандартним часом)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

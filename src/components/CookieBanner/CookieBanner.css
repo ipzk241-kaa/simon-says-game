@@ -1,0 +1,26 @@
+.cookie-banner {
+  background-color: #1f2937 !important; /* темний фон банера */
+  color: #ffffff;
+  font-size: 14px;
+  text-align: center;
+  padding: 10px 20px;
+}
+
+.cookie-banner button {
+  font-size: 14px;
+  padding: 6px 12px;
+  border: none;
+  cursor: pointer;
+  margin: 0 5px;
+  border-radius: 4px;
+}
+
+.cookie-banner .accept-button {
+  background-color: #22c55e;
+  color: #ffffff;
+}
+
+.cookie-banner .decline-button {
+  background-color: #ef4444;
+  color: #ffffff;
+}

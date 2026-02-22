@@ -71,7 +71,7 @@ npm run docs      # генерація документації
 
 Документація згенерована за допомогою JSDoc і знаходиться у папці:
 
-/docs
+[docs](/docs)
 
 ---
 
@@ -112,7 +112,7 @@ Cookies використовуються лише для:
 
 Детальніше у файлі:
 
-PRIVACY.md
+[PRIVACY.md](PRIVACY.md)
 
 ---
 
@@ -122,11 +122,11 @@ PRIVACY.md
 
 Детальніше:
 
-LICENSE
+[LICENSE](LICENSE)
 
 Перевірка ліцензій залежностей:
 
-LICENSE-REPORT.md
+[LICENSE-REPORT.md](LICENSE-REPORT.md)
 
 ---
 

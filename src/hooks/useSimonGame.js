@@ -1,101 +1,39 @@
-import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-
+import { useGameSettings } from "./useGameSettings";
+import { useGameLogic } from "./useGameLogic";
+/**
+ * Custom hook `useSimonGame` combines game settings and game logic for the "Simon Says" game.
+ *
+ * Uses:
+ * - `useGameSettings` to get current game settings (difficulty, speed, colorsCount)
+ * - `useGameLogic` to manage game state (sequence, levels, player clicks)
+ *
+ * @returns {Object} An object containing all game states and methods.
+ * @property {number} level - Current game level.
+ * @property {string|null} activeColor - Currently highlighted color.
+ * @property {boolean} isGameOver - Whether the game has ended.
+ * @property {function} startGame - Function to start the game.
+ * @property {function} handlePlayerClick - Handler function for player clicks. Receives a color string.
+ * @property {string[]} colors - Array of colors for the game.
+ * @property {Object} settings - Current game settings (difficulty, speed, colorsCount).
+ *
+ * @example
+ * const {
+ *   level,
+ *   activeColor,
+ *   isGameOver,
+ *   startGame,
+ *   handlePlayerClick,
+ *   colors,
+ *   settings
+ * } = useSimonGame();
+ */
 export function useSimonGame() {
-  const difficulty = useSelector(state => state.gameSettings.difficulty);
-  const settingsByDifficulty = useSelector(state => state.gameSettings.settingsByDifficulty);
-  const settings = { difficulty, ...settingsByDifficulty[difficulty] };
-  
-  const [colors, setColors] = useState([]);
-
-  const [sequence, setSequence] = useState([]);
-  const [playerInput, setPlayerInput] = useState([]);
-  const [level, setLevel] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isGameOver, setIsGameOver] = useState(false);
-  const [activeColor, setActiveColor] = useState(null);
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  useEffect(() => {
-    const allColors = [
-      "red",
-      "green",
-      "blue",
-      "yellow",
-      "purple",
-      "orange",
-      "pink",
-      "cyan",
-      "celadon",
-    ];
-    setColors(allColors.slice(0, settings.colorsCount));
-  }, [settings.colorsCount]);
-
-  const startGame = () => {
-    setLevel(1);
-    setSequence([]);
-    setPlayerInput([]);
-    setIsGameOver(false);
-    setIsPlaying(true);
-  };
-
-  const nextRound = () => {
-    const nextColor = colors[Math.floor(Math.random() * colors.length)];
-    setSequence((prev) => [...prev, nextColor]);
-    setPlayerInput([]);
-  };
-
-  useEffect(() => {
-    if (isPlaying && sequence.length === 0 && level === 1) {
-      nextRound();
-    }
-  }, [isPlaying, level]);
-
-  useEffect(() => {
-    if (sequence.length > 0) {
-      setIsAnimating(true);
-      let i = 0;
-      const interval = setInterval(() => {
-        setActiveColor(sequence[i]);
-        setTimeout(() => setActiveColor(null), settings.speed / 2);
-        i++;
-        if (i >= sequence.length) {
-          clearInterval(interval);
-          setTimeout(() => setIsAnimating(false), settings.speed);
-        }
-      }, settings.speed);
-    }
-  }, [sequence, settings.speed]);
-
-  const handlePlayerClick = (color) => {
-    if (!isPlaying || isAnimating) return;
-
-    setActiveColor(color);
-    setTimeout(() => setActiveColor(null), 300);
-
-    const newInput = [...playerInput, color];
-    setPlayerInput(newInput);
-
-    if (sequence[newInput.length - 1] !== color) {
-      setIsGameOver(true);
-      setIsPlaying(false);
-      return;
-    }
-
-    if (newInput.length === sequence.length) {
-      setTimeout(() => {
-        setLevel((prev) => prev + 1);
-        nextRound();
-      }, 1000);
-    }
-  };
+  const { settings, colors } = useGameSettings();
+  const gameLogic = useGameLogic(colors, settings.speed);
 
   return {
-    level,
-    activeColor,
-    isGameOver,
-    startGame,
-    handlePlayerClick,
+    ...gameLogic,
     colors,
+    settings
   };
 }

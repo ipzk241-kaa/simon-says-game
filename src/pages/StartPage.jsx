@@ -1,5 +1,5 @@
 import Header from "../components/Header/Header";
-import "../styles/global.css";
+import "./StartPage.css";
 import { useSelector, useDispatch } from "react-redux";
 import { setNickname, ensureUserId } from "../store/userSlice";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +17,24 @@ const schema = Yup.object().shape({
     .max(16, "Максимум 16 символів")
     .required("Введіть нікнейм"),
 });
+
+/**
+ * `StartPage` is the start page of the "Simon Says" game.
+ *
+ * Responsibilities:
+ * - Entering a user nickname using a Formik form with Yup validation
+ * - Creating or confirming a `userId` in the Redux store
+ * - Navigating to the game (`GamePage`) after entering a nickname
+ * - Displaying the Top 10 leaderboard from LocalStorage
+ *
+ * @component
+ * @exports StartPage
+ *
+ * @returns {JSX.Element}
+ *
+ * @example
+ * <StartPage />
+ */
 
 export default function StartPage() {
   const { userId, nickname } = useSelector(state => state.user);

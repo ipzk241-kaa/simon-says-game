@@ -9,6 +9,28 @@ const schema = Yup.object().shape({
   difficulty: Yup.string().required("Оберіть рівень складності"),
 });
 
+/**
+ * `SettingsModal` is a modal window used to configure game settings.
+ *
+ * Responsibilities:
+ * - Selecting the game difficulty level (easy, medium, hard)
+ * - Saving the selected difficulty in the Redux store
+ * - Closing the modal window
+ *
+ * @component
+ * @exports SettingsModal
+ *
+ * @param {boolean} props.isOpen - Indicates whether the modal is open.
+ * @param {function} props.onClose - Callback triggered to close the modal.
+ *
+ * @returns {JSX.Element}
+ *
+ * @example
+ * <SettingsModal
+ *   isOpen={true}
+ *   onClose={() => setIsOpen(false)}
+ * />
+ */
 export default function SettingsModal({ isOpen, onClose }) {
   const difficulty = useSelector(state => state.gameSettings.difficulty);
   const dispatch = useDispatch();

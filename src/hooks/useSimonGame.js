@@ -27,6 +27,7 @@ import { useGameLogic } from "./useGameLogic";
  *   settings
  * } = useSimonGame();
  */
+
 export function useSimonGame() {
   const { settings, colors } = useGameSettings();
   const gameLogic = useGameLogic(colors, settings.speed);

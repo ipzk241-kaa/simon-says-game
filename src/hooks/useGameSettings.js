@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
  * console.log(settings.difficulty); // e.g., "medium"
  * console.log(colors); // e.g., ["red", "green", "blue", "yellow"]
  */
+
 export function useGameSettings() {
   const difficulty = useSelector(state => state.gameSettings.difficulty);
   const settingsByDifficulty = useSelector(state => state.gameSettings.settingsByDifficulty);

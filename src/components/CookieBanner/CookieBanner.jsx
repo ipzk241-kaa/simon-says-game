@@ -29,7 +29,7 @@ export default function CookieBanner() {
       declineButtonClasses="decline-button"
       expires={365}
     >
-      Цей сайт використовує cookies для покращення роботи гри «Саймон каже».
+      Цей сайт використовує cookies, проте всі ваші дані зберігаються виключно в LocalStorage.
     </CookieConsent>
   );
 }

@@ -49,6 +49,7 @@ This document describes how the Simon Says web application collects, uses, and s
 If you have any questions about this policy, you can contact the author:
 
 - **Author:** Artem Kukhar
+- **Email:** ipzk241_kaa@student.ztu.edu.ua
 - **Project:** Simon Says
 - **Type:** educational project
 
